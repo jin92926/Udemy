@@ -6,12 +6,14 @@
 //children는 특별한 props로 거의 유일하게 이름 변경이 불가능함
 //나머지는 자유롭게 이름을 바꿔서 가져올 수 있음
 //on을 사용하면 궁극적ㄷ으로 특정 이벤트에 기반해 실행되는 것을 알려줌
-const TabButton = ({ children, label, onSelect }) => {
+const TabButton = ({ children, label, onSelect, isSelected }) => {
   return (
     <li>
       {/* 함수에 ()를 붙이면 랜더링 될 때 바로 실행되는 것을 의미함
         잘 구분해야함 */}
-      <button onClick={onSelect}>{children}</button>
+      <button className={isSelected ? "active" : null} onClick={onSelect}>
+        {children}
+      </button>
       {/* <button>{label}</button> */}
     </li>
   );
