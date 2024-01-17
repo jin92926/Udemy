@@ -1,10 +1,4 @@
-const initialGameBoard = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
-
-const GameBoard = ({ onSelectSquare, turns }) => {
+const GameBoard = ({ onSelectSquare, board }) => {
   //   const [gameBoard, setGameBoard] = useState(initialGameBoard);
 
   //   const handleSelectSquare = (rowIndex, colIndex) => {
@@ -17,26 +11,21 @@ const GameBoard = ({ onSelectSquare, turns }) => {
   //     });
   //     onSelectSquare();
   //   };
-  let gameBoard = initialGameBoard;
-
-  for (const turn of turns) {
-    // console.log(turn);
-    const { square, player } = turn;
-    const { row, col } = square;
-
-    gameBoard[row][col] = player;
-  }
 
   return (
     <ol id="game-board">
-      {gameBoard.map((row, rowIndex) => (
+      {board.map((row, rowIndex) => (
         <li key={rowIndex}>
           <ol>
             {row.map((playerSymbol, colIndex) => (
               <li key={colIndex}>
                 {/* 기존에는 onClick={onSelectSquare}으로 하면 현재 클릭된 행과 열의
                 index를 모르기 때문에 이런식으로 변경해야함 */}
-                <button onClick={() => onSelectSquare(rowIndex, colIndex)}>
+                <button
+                  onClick={() => onSelectSquare(rowIndex, colIndex)}
+                  //버튼을 누르지 못하게 하는 기능
+                  disabled={playerSymbol !== null}
+                >
                   {playerSymbol}
                 </button>
               </li>

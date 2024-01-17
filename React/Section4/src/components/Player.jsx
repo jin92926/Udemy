@@ -1,10 +1,14 @@
 import { useState } from "react";
 
-const Player = ({ initialName, symbol, isActive }) => {
+const Player = ({ initialName, symbol, isActive, onChangeName }) => {
   //컴포넌트가 두개지만 useState로 각각 다르게 적용받는 이유는
   //리액트는 매번 새로운 인스턴스를 생성하기 때문임
   //동일한 로직을 따르지만 완전히 서로 따로 작동함
   const [isEditing, setIsEditing] = useState(false);
+
+  //플레이어 정보는 Player 컴포넌트에서만 관리돼야됨,
+  // 각각의 Player 컴포넌트는 독립적으로 관리되어야 하며
+  // 만약 app에서 관리하면 수정을 위해 타이핑 할때마다 새로 리랜더링됨
   const [playerName, setPlayerName] = useState(initialName);
 
   const handleEditClick = () => {
@@ -15,6 +19,10 @@ const Player = ({ initialName, symbol, isActive }) => {
     // 이렇게 작업하면 isEditing의 현재 상태를 기준으로 삼음, 즉각적으로 실행 안됨
     // setIsEditing(!isEditing);
     setIsEditing((editing) => !editing);
+
+    if (isEditing) {
+      onChangeName(symbol, playerName);
+    }
   };
 
   const handleChange = (event) => {
