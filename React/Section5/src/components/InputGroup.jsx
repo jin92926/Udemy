@@ -8,11 +8,13 @@ const INPUT_LIST = [
 
 const InputGroup = () => {
   return (
-    <div id="user-input">
-      {INPUT_LIST.map((title) => (
-        <Input title={title} />
-      ))}
-    </div>
+    <section id="user-input">
+      <div className="input-group">
+        {INPUT_LIST.map((title, idx) => (
+          <Input key={idx} title={title} />
+        ))}
+      </div>
+    </section>
   );
 };
 
