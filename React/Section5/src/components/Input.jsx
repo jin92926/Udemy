@@ -1,12 +1,6 @@
 import React, { useState } from "react";
 
-const Input = ({ title }) => {
-  const [inputValue, setInputValue] = useState("");
-
-  const handleInputChange = (event) => {
-    setInputValue(event.target.value);
-  };
-
+const Input = ({ title, onChange, inputValue }) => {
   return (
     <div>
       <label>{title}</label>
@@ -15,7 +9,8 @@ const Input = ({ title }) => {
         required
         id={title}
         name="INITIAL INVESTMENT"
-        onChange={handleInputChange}
+        value={inputValue}
+        onChange={onChange}
       />
     </div>
   );
