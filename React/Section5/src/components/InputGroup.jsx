@@ -6,17 +6,12 @@ const INPUT_LIST = [
   "DURATION",
 ];
 
-const InputGroup = ({ onChange, inputValue }) => {
+const InputGroup = () => {
   return (
     <section id="user-input">
       <div className="input-group">
         {INPUT_LIST.map((title, idx) => (
-          <Input
-            key={idx}
-            title={title}
-            onChange={onChange}
-            inputValue={inputValue}
-          />
+          <Input key={idx} title={title} />
         ))}
       </div>
     </section>
