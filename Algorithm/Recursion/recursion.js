@@ -48,3 +48,23 @@ const factorial2 = (num) => {
   if (num === 1) return 1;
   return num * factorial2(num - 1);
 };
+// 헬퍼 매소드 재귀
+const collectOddValues = (arr) => {
+  let result = [];
+  const helper = (helperInput) => {
+    if (helperInput.length === 0) return;
+    if (helperInput[0] % 2 !== 0) result.push(helperInput[0]);
+    helper(helperInput.slice(1));
+  };
+  helper(arr);
+  return result;
+};
+//순수 재귀
+const collectOddValues2 = (arr) => {
+  let newArr = [];
+  if (arr.length === 0) return newArr;
+  if (arr[0] % 2 === 0) newArr.push(arr[0]);
+
+  newArr = newArr.concat(collectOddValues2(arr.slice(1)));
+  return newArr;
+};
