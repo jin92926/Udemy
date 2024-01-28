@@ -1,17 +1,23 @@
 import Input from "./Input";
-const INPUT_LIST = [
-  "INITIAL INVESTMENT",
-  "ANNUAL INVESTMENT",
-  "EXPECTED RETURN",
-  "DURATION",
-];
+const INPUT_LIST = {
+  "INITIAL INVESTMENT": "initialInvestment",
+  "ANNUAL INVESTMENT": "annualInvestment",
+  "EXPECTED RETURN": "expectedReturn",
+  DURATION: "duration",
+};
 
-const InputGroup = () => {
+const InputGroup = ({ userInput, handleChange }) => {
   return (
     <section id="user-input">
       <div className="input-group">
-        {INPUT_LIST.map((title, idx) => (
-          <Input key={idx} title={title} />
+        {Object.entries(INPUT_LIST).map(([title, name], idx) => (
+          <Input
+            key={idx}
+            title={title}
+            value={userInput[name]}
+            handleChange={handleChange}
+            name={name}
+          />
         ))}
       </div>
     </section>
