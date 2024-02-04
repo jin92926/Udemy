@@ -25,9 +25,23 @@ header h1 {
   margin: 0;
 }
 
-header p {
+/* header p {
   text-align: center;
   color: #a39191;
+  margin: 0;
+} */
+
+/* 
+이렇게 하면 전체 p가 모두 영향을 받음
+p {
+  text-align: center;
+  color: #a39191;
+  margin: 0;
+} */
+
+.paragraph {
+  text-align: center;
+  color: blue;
   margin: 0;
 }
 
