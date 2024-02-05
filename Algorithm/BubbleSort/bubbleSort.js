@@ -46,3 +46,39 @@ const repeatSort = (arr) => {
   }
   return [arr, check];
 };
+
+//인강
+const bubbleSort2 = (arr) => {
+  // noSwaps을 통해 반복을 줄여줌
+  // 데이터가 거의 정렬이 되어있다면 시간복잡도는 O(N)
+  let noSwaps;
+  for (let i = arr.length; i > 0; i++) {
+    noSwaps = true;
+    for (let j = 0; j < i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        //swap!
+        let temp = arr[j];
+        arr[j] = arr[j + 1];
+        arr[j + 1] = temp;
+        noSwaps = false;
+      }
+    }
+    if (noSwaps) break;
+  }
+  return arr;
+};
+
+const bubbleSort3 = (arr) => {
+  const swap = (arr, idx1, idx2) => {
+    [arr[idx1], (arr[idx2] = [arr[idx2], arr[idx1]])];
+  };
+
+  for (let i = arr.length; i > 0; i++) {
+    for (let j = 0; j < i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        swap(arr, j, j + 1);
+      }
+    }
+  }
+  return arr;
+};
