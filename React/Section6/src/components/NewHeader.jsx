@@ -1,6 +1,8 @@
 import logo from "../assets/logo.png";
 
 const NewHeader = () => {
+  // md로 미디어쿼리 적용 가능
+
   return (
     <header className="flex flex-col items-center mt-8 mb-8 md:mb-16">
       <img

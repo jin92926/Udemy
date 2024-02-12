@@ -2,16 +2,18 @@ import { useState } from "react";
 import { styled } from "styled-components";
 import Button from "./Button";
 import CustomInput from "./Input";
+import NewButton from "./NewButton";
+import NewInput from "./NewInput";
 
 // tagged templates을 입력으로 받음
 //하나에서만 사용하는 styled은 동일 파일에 두는 것이 적절하지만
 //여러 곳에서 사용되는 styled은 따로 컴포넌트 하는 것이 좋음
-const ControlContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
-`;
+// const ControlContainer = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   gap: 0.5rem;
+//   margin-bottom: 1.5rem;
+// `;
 
 export default function AuthInputs() {
   const [enteredEmail, setEnteredEmail] = useState("");
@@ -34,26 +36,30 @@ export default function AuthInputs() {
   const passwordNotValid = submitted && enteredPassword.trim().length < 6;
 
   return (
-    <div id="auth-inputs">
-      <ControlContainer>
-        <CustomInput
+    <div
+      id="auth-inputs"
+      className="w-full max-w-sm p-8 mx-auto rounded shadow-md bg-gradient-to-b from-stone-700 to-stone-800"
+    >
+      <div className="flex flex-col gap-2 mb-6">
+        <NewInput
           label="email"
-          $invalid={emailNotValid}
+          invalid={emailNotValid}
           onChange={(event) => handleInputChange("email", event.target.value)}
         />
-        <CustomInput
+        <NewInput
           label="password"
-          $invalid={passwordNotValid}
+          invalid={passwordNotValid}
           onChange={(event) =>
             handleInputChange("password", event.target.value)
           }
         />
-      </ControlContainer>
-      <div className="actions">
-        <button type="button" className="text-button">
+      </div>
+      <div className="flex justify-end gap-4">
+        <button type="button" className="text-amber-400 hover:text-amber-500">
           Create a new account
         </button>
-        <Button onClick={handleLogin}>Sign In</Button>
+        {/* <Button onClick={handleLogin}>Sign In</Button> */}
+        <NewButton onClick={handleLogin}>Sign In</NewButton>
       </div>
     </div>
   );
