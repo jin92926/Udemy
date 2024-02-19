@@ -1,3 +1,5 @@
+// 삽입정렬은 하나의 항목을 올바른 위치에 삽입해서 배열을 점진적으로 구축하는 방법
+
 const insertSort = () => {
   for (let i = 1; i < arr.length; i++) {
     let currentVal = arr[i];
