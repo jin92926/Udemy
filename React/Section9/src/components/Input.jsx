@@ -1,4 +1,7 @@
-const Input = ({ label, textarea, ...props }) => {
+import { forwardRef } from "react";
+
+//forwardRef로 ref를 받아오는 방법
+const Input = forwardRef(({ label, textarea, ...props }, ref) => {
   const classes =
     "w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600";
   return (
@@ -7,12 +10,12 @@ const Input = ({ label, textarea, ...props }) => {
         {label}
       </label>
       {textarea ? (
-        <textarea className={classes} {...props} />
+        <textarea ref={ref} className={classes} {...props} />
       ) : (
-        <input className={classes} {...props} />
+        <input ref={ref} className={classes} {...props} />
       )}
     </p>
   );
-};
+});
 
 export default Input;
