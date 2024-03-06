@@ -1,4 +1,11 @@
-export default function Cart({ items, onUpdateItemQuantity }) {
+// context api를 사용하기 위해서는 사용하는 위치에 useContext 훅을 사용
+// 이를 통해 컨텍스트 값에 접근해 사용할 수 있게 함
+import { useContext } from "react";
+import { CartContext } from "../store/shoppng-cart-context";
+
+export default function Cart({ onUpdateItemQuantity }) {
+  const { items } = useContext(CartContext);
+
   const totalPrice = items.reduce(
     (acc, item) => acc + item.price * item.quantity,
     0
