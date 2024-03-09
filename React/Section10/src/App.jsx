@@ -67,9 +67,14 @@ function App() {
     });
   }
 
+  const ctxValue = {
+    items: shoppingCart.items,
+    addItemToCart: handleAddItemToCart,
+  };
+
   return (
     //Provider를 붙여야 컴포넌트로 사용 가능, 사용하기 위해서는 항상 value를 입력해야함
-    <CartContext.Provider value={{ items: [] }}>
+    <CartContext.Provider value={ctxValue}>
       <Header
         cart={shoppingCart}
         onUpdateCartItemQuantity={handleUpdateCartItemQuantity}
