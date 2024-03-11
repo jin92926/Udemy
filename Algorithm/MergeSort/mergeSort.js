@@ -1,4 +1,6 @@
 // 이전 버블, 선택, 삽입과 다르게 시간 복잡도가 뛰어남
+// 합병 정렬은 최적, 평균, 최악 케이스 모두 O(NlogN)
+
 const merge = (arr1, arr2) => {
   let results = [];
   let [i, j] = [0, 0];
