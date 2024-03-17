@@ -5,89 +5,24 @@ import Shop from "./components/Shop.jsx";
 import { DUMMY_PRODUCTS } from "./dummy-products.js";
 import Product from "./components/Product.jsx";
 import { CartContext } from "./store/shoppng-cart-context.jsx";
+import { CartContextProvider } from "./store/shoppng-cart-context.jsx";
 
 function App() {
-  const [shoppingCart, setShoppingCart] = useState({
-    items: [],
-  });
-
-  function handleAddItemToCart(id) {
-    setShoppingCart((prevShoppingCart) => {
-      const updatedItems = [...prevShoppingCart.items];
-
-      const existingCartItemIndex = updatedItems.findIndex(
-        (cartItem) => cartItem.id === id
-      );
-      const existingCartItem = updatedItems[existingCartItemIndex];
-
-      if (existingCartItem) {
-        const updatedItem = {
-          ...existingCartItem,
-          quantity: existingCartItem.quantity + 1,
-        };
-        updatedItems[existingCartItemIndex] = updatedItem;
-      } else {
-        const product = DUMMY_PRODUCTS.find((product) => product.id === id);
-        updatedItems.push({
-          id: id,
-          name: product.title,
-          price: product.price,
-          quantity: 1,
-        });
-      }
-
-      return {
-        items: updatedItems,
-      };
-    });
-  }
-
-  function handleUpdateCartItemQuantity(productId, amount) {
-    setShoppingCart((prevShoppingCart) => {
-      const updatedItems = [...prevShoppingCart.items];
-      const updatedItemIndex = updatedItems.findIndex(
-        (item) => item.id === productId
-      );
-
-      const updatedItem = {
-        ...updatedItems[updatedItemIndex],
-      };
-
-      updatedItem.quantity += amount;
-
-      if (updatedItem.quantity <= 0) {
-        updatedItems.splice(updatedItemIndex, 1);
-      } else {
-        updatedItems[updatedItemIndex] = updatedItem;
-      }
-
-      return {
-        items: updatedItems,
-      };
-    });
-  }
-
-  const ctxValue = {
-    items: shoppingCart.items,
-    addItemToCart: handleAddItemToCart,
-    updatedItemQuantity: handleUpdateCartItemQuantity,
-  };
-
   return (
     //Provider를 붙여야 컴포넌트로 사용 가능, 사용하기 위해서는 항상 value를 입력해야함
-    <CartContext.Provider value={ctxValue}>
+    <CartContextProvider>
       <Header />
       {/* 기존의 prop drolling 대신 shop에 컴포넌트 합성을 통해 전달
       다만 모든 곳에서 사용하기 어려움
       */}
-      <Shop onAddItemToCart={handleAddItemToCart}>
+      <Shop>
         {DUMMY_PRODUCTS.map((product) => (
           <li key={product.id}>
             <Product {...product} />
           </li>
         ))}
       </Shop>
-    </CartContext.Provider>
+    </CartContextProvider>
   );
 }
 
