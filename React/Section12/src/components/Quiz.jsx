@@ -1,7 +1,8 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef } from "react";
 import QUESTIONS from "../questions";
 import quizCompleteImg from "../assets/quiz-complete.png";
-import QuestionTimer from "./QuestionTimer";
+
+import Question from "./Question";
 
 const Quiz = () => {
   const [userAnswers, setUserAnswers] = useState([]);
@@ -48,47 +49,20 @@ const Quiz = () => {
     );
   }
 
-  const shuffledAnswers = [...QUESTIONS[activeQuestionIndex].answers];
-  shuffledAnswers.sort(() => Math.random() - 0.5);
-
   return (
     <div id="quiz">
-      <div id="question">
-        <QuestionTimer
-          //키값을 추가해서 리랜더링되게끔 만들기
-          key={activeQuestionIndex}
-          timeout={10000}
-          onTimeout={handleSkipAnswer}
-        />
-        <h2>{QUESTIONS[activeQuestionIndex].text}</h2>
-        <ul id="answers">
-          {shuffledAnswers.map((answer) => {
-            const isSelected = userAnswers[userAnswers.length - 1] === answer;
-            let cssClasses = "";
-
-            if (answerState === "answered" && isSelected) {
-              cssClasses = "selected";
-            }
-            if (
-              answerState === "correct" ||
-              (answerState === "wrong" && isSelected)
-            ) {
-              cssClasses = answerState;
-            }
-
-            return (
-              <li key={answer} className="answer">
-                <button
-                  onClick={() => handleSelectAnswer(answer)}
-                  className={cssClasses}
-                >
-                  {answer}
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+      {/* 형제 컴포넌트에 동일한 키값을 넣으면 안됨 
+        이럴 경우에는 두 형제 컴포넌트를 갖는 새로운 컴포넌트를 생성해서
+        해당 컴포넌트에 키값을 넣어주면 됨
+        */}
+      <Question
+        key={activeQuestionIndex}
+        questionText={QUESTIONS[activeQuestionIndex].text}
+        answers={QUESTIONS[activeQuestionIndex].answers}
+        answerState={answerState}
+        selectedAnswer={userAnswers[userAnswers.length - 1]}
+        onSelectAnswer={handleSelectAnswer}
+      />
     </div>
   );
 };
