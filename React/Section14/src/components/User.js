@@ -2,6 +2,7 @@ import classes from "./User.module.css";
 import { Component } from "react";
 
 // render는 props를 받지않음, Component 사용해서 props에 접근할 수 있음
+
 class User extends Component {
   componentWillUnmount() {
     console.log("User will unmount");

@@ -3,6 +3,8 @@ import User from "./User";
 
 import classes from "./Users.module.css";
 
+// class는 대부분 함수형을 사용해서 일반적으로 사용하지 않지만
+// 오류 경계에 사용함
 class Users extends Component {
   // class를 사용할 때 상태를 사용할 때 항상 초기화, 상태정의를 해야했음
 
@@ -13,6 +15,18 @@ class Users extends Component {
       showUsers: true,
       more: "Test",
     };
+  }
+
+  componentDidUpdate() {
+    //js에서만 사용 가능
+    // try {
+    //   someCodeWhichMightFail();
+    // } catch (err) {
+    //   //handle error
+    // }
+    if (this.props.users.length === 0) {
+      throw new Error("No users provided!");
+    }
   }
 
   toggleUsersHandler() {
