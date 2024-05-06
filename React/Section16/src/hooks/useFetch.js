@@ -3,17 +3,17 @@
 import { useEffect, useState } from "react";
 
 // 커스텀 훅은 use로 시작해야함
-const useFetch = (fetchFn) => {
+const useFetch = (fetchFn, initialValue) => {
   const [isFetching, setIsFetching] = useState();
   const [error, setError] = useState();
-  const [fetchedData, setFetchedData] = useState();
+  const [fetchedData, setFetchedData] = useState(initialValue);
 
   useEffect(() => {
     async function fetchData() {
       setIsFetching(true);
       try {
-        const places = await fetchFn();
-        setUserPlaces(places);
+        const data = await fetchFn();
+        setFetchedData(data);
       } catch (error) {
         setError({ message: error.message || "Failed to fetch data." });
       }
