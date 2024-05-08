@@ -28,6 +28,7 @@ const useFetch = (fetchFn, initialValue) => {
     isFetching,
     fetchedData,
     error,
+    setFetchedData,
   };
 };
 
