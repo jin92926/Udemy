@@ -1,11 +1,28 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 export default function Login() {
-  const [enteredEmail, setEnteredEmail] = useState();
+  const [emailIsInvalid, setEmailIsInValid] = useState(false);
+
+  // useRef를 활용하는 방법도 있지만 복잡한 양식을 갖고 있다면
+  // 참조가 많아야하며 직접 dom를 건드리기에 사용하기 좋지 않음
+  const email = useRef();
+  const password = useRef();
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("submitted");
+    const enteredEmail = email.current.value;
+    const enteredPassword = password.current.value;
+
+    const emailIsValid = enteredEmail.includes("@");
+
+    if (!emailIsValid) {
+      setEmailIsInValid(true);
+      return;
+    }
+    setEmailIsInValid(false);
+
+    console.log(enteredEmail, enteredPassword);
+    console.log("sending http request..");
   };
 
   return (
@@ -15,12 +32,31 @@ export default function Login() {
       <div className="control-row">
         <div className="control no-margin">
           <label htmlFor="email">Email</label>
-          <input id="email" type="email" name="email" />
+          <input
+            id="email"
+            type="email"
+            name="email"
+            // onChange={(event) => handleInputChange("email", event.target.value)}
+            // value={enteredValues.email}
+            ref={email}
+          />
+          <div className="control-error">
+            {emailIsInvalid && <p>Please enter a valid email</p>}
+          </div>
         </div>
 
         <div className="control no-margin">
           <label htmlFor="password">Password</label>
-          <input id="password" type="password" name="password" />
+          <input
+            id="password"
+            type="password"
+            name="password"
+            // onChange={(event) =>
+            //   handleInputChange("password", event.target.value)
+            // }
+            // value={enteredValues.password}
+            ref={password}
+          />
         </div>
       </div>
 
