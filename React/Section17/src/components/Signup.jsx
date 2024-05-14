@@ -1,4 +1,7 @@
+import { useState } from "react";
+
 export default function Signup() {
+  const [passwordsAreNotEqual, setPasswordsAreNotEqual] = useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -12,6 +15,13 @@ export default function Signup() {
     const data = Object.fromEntries(fd.entries());
     //그 후에 data에 추가해서 사용할 수 있음
     data.acquisition = acquisitionChannel;
+
+    //커스텀으로 유효성 검사를 추가할 수도 있음
+    if (data.password !== data["confirm-password"]) {
+      setPasswordsAreNotEqual(true);
+      return;
+    }
+
     console.log(data);
 
     //ref를 활용하는 방법은 dom를 직접적으로 건드리는 방법이기에 비추천됨
@@ -49,7 +59,11 @@ export default function Signup() {
             id="confirm-password"
             type="password"
             name="confirm-password"
+            required
           />
+          <div className="control-error">
+            {passwordsAreNotEqual && <p>Passwords must match.</p>}
+          </div>
         </div>
       </div>
 

@@ -1,4 +1,7 @@
 import { useRef, useState } from "react";
+import { isEmail, isNotEmpty, hasMinLength } from "../util/validation";
+
+import Input from "./Input";
 
 export default function StateLogin() {
   //입력값마다 개별 상태를 만들면 너무 많아짐
@@ -37,7 +40,16 @@ export default function StateLogin() {
   //   const emailIsInvalid =
   //     enteredValues.email !== "" && !enteredValues.email.includes("@");
 
-  const emailIsInvalid = didEdit.email && !enteredValues.email.includes("@");
+  // const emailIsInvalid = didEdit.email && !enteredValues.email.includes("@");
+  const emailIsInvalid =
+    didEdit.email &&
+    !isEmail(enteredValues.email) &&
+    !isNotEmpty(enteredValues.email);
+  // const passwordIsInvalid =
+  //   didEdit.password && enteredValues.password.trim().length < 6;
+  const passwordIsInvalid =
+    didEdit.password && !hasMinLength(enteredValues.password, 6);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     console.log(enteredValues);
@@ -71,7 +83,17 @@ export default function StateLogin() {
       <h2>Login</h2>
 
       <div className="control-row">
-        <div className="control no-margin">
+        <Input
+          label="Email"
+          id="email"
+          type="email"
+          name="email"
+          onChange={(event) => handleInputChange("email", event.target.value)}
+          value={enteredValues.email}
+          onBlur={() => handleInputBlur("email")}
+          error={emailIsInvalid && "please enter a valid email!"}
+        />
+        {/* <div className="control no-margin">
           <label htmlFor="email">Email</label>
           <input
             id="email"
@@ -85,9 +107,21 @@ export default function StateLogin() {
           <div className="control-error">
             {emailIsInvalid && <p>Please enter a valid email address</p>}
           </div>
-        </div>
+        </div> */}
+        <Input
+          label="Password"
+          id="password"
+          type="password"
+          name="password"
+          onChange={(event) =>
+            handleInputChange("password", event.target.value)
+          }
+          value={enteredValues.password}
+          onBlur={() => handleInputBlur("password")}
+          error={passwordIsInvalid && "please enter a valid password!"}
+        />
 
-        <div className="control no-margin">
+        {/* <div className="control no-margin">
           <label htmlFor="password">Password</label>
           <input
             id="password"
@@ -98,7 +132,7 @@ export default function StateLogin() {
             }
             value={enteredValues.password}
           />
-        </div>
+        </div> */}
       </div>
 
       <p className="form-actions">
