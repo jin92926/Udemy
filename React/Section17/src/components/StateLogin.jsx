@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { isEmail, isNotEmpty, hasMinLength } from "../util/validation";
 
 import Input from "./Input";
+import useInput from "../hooks/useInput";
 
 export default function StateLogin() {
   //입력값마다 개별 상태를 만들면 너무 많아짐
@@ -11,15 +12,15 @@ export default function StateLogin() {
 
   //키가 입력될때마다 유효성 검사를 위해서는 ref나 forData는 값이 제출된 이후에
   //알 수 있기에 state를 기반으로 접근해야함
-  const [enteredValues, setEnteredValues] = useState({
-    email: "",
-    password: "",
-    //기존 상태에 병합시킬수도 있음
-    // email: {
-    //     value: "",
-    //     didEdit: false
-    // }
-  });
+  // const [enteredValues, setEnteredValues] = useState({
+  //   email: "",
+  //   password: "",
+  //   //기존 상태에 병합시킬수도 있음
+  //   // email: {
+  //   //     value: "",
+  //   //     didEdit: false
+  //   // }
+  // });
 
   // const handleEmailchange = (event) => {
   //   setEnteredEmail(event.target.value);
@@ -29,10 +30,24 @@ export default function StateLogin() {
   //   setEnteredPassword(event.target.value);
   // };
 
-  const [didEdit, setDidEdit] = useState({
-    email: false,
-    password: false,
-  });
+  // const [didEdit, setDidEdit] = useState({
+  //   email: false,
+  //   password: false,
+  // });
+
+  const {
+    value: emailValue,
+    handleInputChange: handleEmailChange,
+    handleInputBlur: handleEmailBlur,
+    hasError: emailHasError,
+  } = useInput("", (value) => isEmail(value) && isNotEmpty(value));
+
+  const {
+    value: passwordValue,
+    handleInputChange: handlePasswordChange,
+    handleInputBlur: handlePasswordBlur,
+    hasError: passwordHasError,
+  } = useInput("", (value) => hasMinLength(value, 6));
 
   //이 방식은 두 가지의 문제점을 가지고 있음
   //1. 유요한 이메일을 입력 후 지우면 오류 메시지가 보이지 않음
@@ -41,42 +56,48 @@ export default function StateLogin() {
   //     enteredValues.email !== "" && !enteredValues.email.includes("@");
 
   // const emailIsInvalid = didEdit.email && !enteredValues.email.includes("@");
-  const emailIsInvalid =
-    didEdit.email &&
-    !isEmail(enteredValues.email) &&
-    !isNotEmpty(enteredValues.email);
+  // const emailIsInvalid =
+  //   didEdit.email &&
+  //   !isEmail(enteredValues.email) &&
+  //   !isNotEmpty(enteredValues.email);
   // const passwordIsInvalid =
   //   didEdit.password && enteredValues.password.trim().length < 6;
-  const passwordIsInvalid =
-    didEdit.password && !hasMinLength(enteredValues.password, 6);
+  // const passwordIsInvalid =
+  //   didEdit.password && !hasMinLength(enteredValues.password, 6);
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(enteredValues);
+    // console.log(enteredValues);
+
+    if (emailHasError || passwordHasError) {
+      return;
+    }
+
+    console.log(emailValue, passwordValue);
     //키 기반의 유효성 검사를 한다고 해도
     //마지막에는 제출 기반의 유효성 검사를 추가하는 것이 좋음
   };
 
-  const handleInputChange = (identifier, value) => {
-    setEnteredValues((prevValues) => ({
-      ...prevValues,
-      [identifier]: value,
-    }));
+  // const handleInputChange = (identifier, value) => {
+  //   setEnteredValues((prevValues) => ({
+  //     ...prevValues,
+  //     [identifier]: value,
+  //   }));
 
-    //오류가 계속 떠있는 건 사용자 경험에 좋지 않기에
-    //재입력하면 다시 사라지도록 설정하는 것이 좋음
-    setDidEdit((prevEdit) => ({
-      ...prevEdit,
-      [identifier]: false,
-    }));
-  };
+  //   //오류가 계속 떠있는 건 사용자 경험에 좋지 않기에
+  //   //재입력하면 다시 사라지도록 설정하는 것이 좋음
+  //   setDidEdit((prevEdit) => ({
+  //     ...prevEdit,
+  //     [identifier]: false,
+  //   }));
+  // };
 
-  const handleInputBlur = (identifier) => {
-    setDidEdit((prevEdit) => ({
-      ...prevEdit,
-      [identifier]: true,
-    }));
-  };
+  // const handleInputBlur = (identifier) => {
+  //   setDidEdit((prevEdit) => ({
+  //     ...prevEdit,
+  //     [identifier]: true,
+  //   }));
+  // };
 
   return (
     <form onSubmit={handleSubmit}>
@@ -88,10 +109,14 @@ export default function StateLogin() {
           id="email"
           type="email"
           name="email"
-          onChange={(event) => handleInputChange("email", event.target.value)}
-          value={enteredValues.email}
-          onBlur={() => handleInputBlur("email")}
-          error={emailIsInvalid && "please enter a valid email!"}
+          // onChange={(event) => handleInputChange("email", event.target.value)}
+          // value={enteredValues.email}
+          // onBlur={() => handleInputBlur("email")}
+          // error={emailIsInvalid && "please enter a valid email!"}
+          value={emailValue}
+          onChange={handleEmailChange}
+          onBlur={handleEmailBlur}
+          error={emailHasError && "please enter a valid email!"}
         />
         {/* <div className="control no-margin">
           <label htmlFor="email">Email</label>
@@ -113,12 +138,16 @@ export default function StateLogin() {
           id="password"
           type="password"
           name="password"
-          onChange={(event) =>
-            handleInputChange("password", event.target.value)
-          }
-          value={enteredValues.password}
-          onBlur={() => handleInputBlur("password")}
-          error={passwordIsInvalid && "please enter a valid password!"}
+          // onChange={(event) =>
+          //   handleInputChange("password", event.target.value)
+          // }
+          // value={enteredValues.password}
+          // onBlur={() => handleInputBlur("password")}
+          // error={passwordIsInvalid && "please enter a valid password!"}
+          onChange={handlePasswordChange}
+          value={passwordValue}
+          onBlur={handlePasswordBlur}
+          error={passwordHasError && "please enter a valid password!"}
         />
 
         {/* <div className="control no-margin">
