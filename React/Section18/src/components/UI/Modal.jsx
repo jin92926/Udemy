@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 
-const Modal = ({ children, open, className = "" }) => {
+const Modal = ({ children, open, className = "", onClose }) => {
   const dialog = useRef();
 
   useEffect(() => {
@@ -17,7 +17,9 @@ const Modal = ({ children, open, className = "" }) => {
   }, [open]);
 
   return createPortal(
-    <dialog ref={dialog} className={`modal ${className}`}>
+    // esc버튼을 누르면 브라우저가 모달은 꺼지지만 앱상에서는 떠있다고 파악함
+    // 그러므로 onClose로 UserProgress의 값을 확실하게 바꿔줘야함
+    <dialog ref={dialog} className={`modal ${className}`} onClose={onClose}>
       {children}
     </dialog>,
     document.getElementById("modal")
