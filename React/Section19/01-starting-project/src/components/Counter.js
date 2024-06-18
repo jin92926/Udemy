@@ -4,6 +4,8 @@ import classes from "./Counter.module.css";
 // 저장소가 관리하는 상태 부분을 자동으로 선택할 수 있기 때문임
 import { connect, useDispatch, useSelector } from "react-redux";
 
+import { counterActions } from "../store/index";
+
 const Counter = () => {
   const dispatch = useDispatch();
   const counter = useSelector((state) => state.counter);
@@ -11,19 +13,19 @@ const Counter = () => {
   const show = useSelector((state) => state.showCounter);
 
   const incrementHandler = () => {
-    dispatch({ type: "increment" });
+    dispatch(counterActions.increment());
   };
 
   const increaseHandler = () => {
-    dispatch({ type: "increase", amount: 5 });
+    dispatch(counterActions.increase(10));
   };
 
   const decrementHandler = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterActions.decrement());
   };
 
   const toggleCounterHandler = () => {
-    dispatch({ type: "toggle" });
+    dispatch(counterActions.toggleCounter());
   };
 
   return (
