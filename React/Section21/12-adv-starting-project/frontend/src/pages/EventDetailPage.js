@@ -1,6 +1,7 @@
 import React from "react";
 import {
   json,
+  redirect,
   useLoaderData,
   useParams,
   useRouteLoaderData,
@@ -37,5 +38,23 @@ export const loader = async ({ request, params }) => {
     );
   } else {
     return response;
+  }
+};
+
+export const action = async ({ params, request }) => {
+  const evertId = params.eventId;
+  const response = await fetch(`http://localhost:8080/events/${evertId}`, {
+    method: request.method,
+  });
+
+  if (!response.ok) {
+    throw json(
+      { message: "could not fetch details for selected event" },
+      {
+        status: 500,
+      }
+    );
+  } else {
+    return redirect("/events");
   }
 };
