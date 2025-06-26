@@ -12,8 +12,12 @@ let instructor = {
 
 // 배열은 정렬되어 있음,
 // 접근은 O(1), 탐색은 O(n), 입력과 제거는 상황에 따라 다름
+// 뒷쪽에 추가, 제거 시 메모리 이동이나 재정렬 없이 바로 제거되기에 O(1),
 // 앞쪽에 추가, 제거 시 인덱스가 다 새롭게 배정되어야 하기에 O(n)
 // 성능을 위해선 되도록이면 뒤쪽에 추가 및 제거를 해야함
+// push, pop O(1)
+// shift, unshift, concat, slice, splice, forEach, map, filter, reduce 등 O(n)
+// sort O(NlogN)
 
 let names = ["nam", "lee", "choi"];
 
