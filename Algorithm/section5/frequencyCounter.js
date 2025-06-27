@@ -31,6 +31,7 @@ function same2(arr1, arr2) {
   }
   console.log(frequencyCounter1);
   console.log(frequencyCounter2);
+  // in 연산자는 객체에 속성이 존재하는지 여부를 판단
   for (let key in frequencyCounter1) {
     if (!(key ** 2 in frequencyCounter2)) {
       return false;
@@ -51,12 +52,15 @@ function validAnagram(str1, str2) {
   //두 문자열의 길이가 다르면 false를 반환
   if (str1.length !== str2.length) return false;
 
-  // 객체는 순서가 없으므로 객체로 만들어서 키 순환하면서 비교
-  const [obj1, obj2] = [{}, {}];
-  frequencyCounter(str1, obj1);
-  frequencyCounter(str2, obj2);
+  // 각 문자열의 문자 빈도를 객체로 계산
+  const [obj1, obj2] = [frequencyCounter(str1), frequencyCounter(str2)];
 
   for (const key in obj1) {
+    //obj2에 해당 문자가 없다면 false 반환
+    if (!(key in obj2)) {
+      return false;
+    }
+    //문자는 있으나 갯수가 다르면 false 반환
     if (obj1[key] !== obj2[key]) {
       return false;
     }
@@ -64,8 +68,16 @@ function validAnagram(str1, str2) {
   return true;
 }
 
-function frequencyCounter(str, obj) {
+// function frequencyCounter(str, obj) {
+//   for (const val of str) {
+//     obj[val] = (obj[val] || 0) + 1;
+//   }
+// }
+
+function frequencyCounter(str) {
+  const obj = {};
   for (const val of str) {
     obj[val] = (obj[val] || 0) + 1;
   }
+  return obj;
 }
