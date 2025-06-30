@@ -48,6 +48,15 @@ const factorial2 = (num) => {
   if (num === 1) return 1;
   return num * factorial2(num - 1);
 };
+
+//꼬리 재귀
+const tailFactorial = (n, acc = 1) => {
+  if (n === 1) return acc;
+  //이렇게 하면 공간복잡도가 o(n) -> o(1)로 다만 일부엔진에서만 유효하므로
+  //실제로는 반복문으로 작성하는게 좋음
+  return tailFactorial(n - 1, acc * n); // 재귀 호출이 마지막 작업
+};
+
 // 헬퍼 매소드 재귀
 const collectOddValues = (arr) => {
   let result = [];
