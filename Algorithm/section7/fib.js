@@ -11,3 +11,8 @@ const fib = (num) => {
 
   return result;
 };
+
+const fib2 = (num) => {
+  if (num <= 2) return 1;
+  return fib(num - 2) + fib(num - 1);
+};

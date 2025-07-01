@@ -12,7 +12,7 @@ const reverse = (str) => {
 
 const reverse2 = (str) => {
   //탈출 빈 문자열, 길이가 1인 경우
-  if (str === "" || str.length === 1) return str;
+  if (str.length <= 1) return str;
 
   return reverse2(str.slice(1)) + str[0];
 };

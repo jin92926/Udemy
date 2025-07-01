@@ -13,3 +13,22 @@ const flatten = (multiDimensionalArr) => {
 
   return flatten(convertArr);
 };
+
+const flatten2 = (arr) => {
+  let result = [];
+
+  for (let el of arr) {
+    if (Array.isArray(el)) {
+      result = result.concat(flatten(el)); // 재귀 호출
+    } else {
+      result.push(el);
+    }
+  }
+
+  return result;
+};
+const flatten3 = (arr) => {
+  // es10에서 추가된 flat 기본값은 1로 숫자 지정만큼 평탄화
+  // 최신환경 아닌 곳에선 사용 힘듬
+  return arr.flat(Infinity);
+};

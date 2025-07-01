@@ -22,3 +22,15 @@ const reverse = (str) => {
   if (str.length <= 1) return str;
   return reverse(str.slice(1)) + str[0];
 };
+// 투포인터 방식이 가장 좋은듯
+const isPalindrome3 = (str) => {
+  let left = 0;
+  let right = str.length - 1;
+
+  while (left < right) {
+    if (str[left] !== str[right]) return false;
+    left++;
+    right--;
+  }
+  return true;
+};

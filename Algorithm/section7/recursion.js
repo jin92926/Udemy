@@ -59,6 +59,7 @@ const tailFactorial = (n, acc = 1) => {
 
 // 헬퍼 매소드 재귀
 const collectOddValues = (arr) => {
+  //바로 재귀하면 계속 빈배열이기 때문에 이런식으로 설계함
   let result = [];
   const helper = (helperInput) => {
     if (helperInput.length === 0) return;
@@ -72,7 +73,7 @@ const collectOddValues = (arr) => {
 const collectOddValues2 = (arr) => {
   let newArr = [];
   if (arr.length === 0) return newArr;
-  if (arr[0] % 2 === 0) newArr.push(arr[0]);
+  if (arr[0] % 2 !== 0) newArr.push(arr[0]);
 
   newArr = newArr.concat(collectOddValues2(arr.slice(1)));
   return newArr;
