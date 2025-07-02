@@ -23,3 +23,26 @@ const isUpper = (str) => {
   if (firstStr === firstStr.toUpperCase()) return true;
   return false;
 };
+// 헬퍼 메서드
+const capitalizeFirst3 = (arr) => {
+  const result = [];
+
+  const helper = (helperInput) => {
+    if (helperInput.length === 0) return;
+    const firstChar = helperInput[0][0];
+    if (firstChar)
+      result.push(firstChar.toUpperCase() + helperInput[0].slice(1));
+    helper(helperInput.slice(1));
+  };
+  helper(arr);
+  return result;
+};
+//순수 재귀
+const capitalizeFirst4 = (arr) => {
+  if (arr.length === 0) return [];
+
+  const [first, ...rest] = arr;
+  const capitalized = first[0].toUpperCase() + first.slice(1);
+
+  return [capitalized, ...capitalizeFirst4(rest)];
+};
