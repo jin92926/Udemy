@@ -23,14 +23,15 @@
 
 const nestedEvenSum = (obj) => {
   let result = 0;
-  // obj의 키가 없으면 result 반환
-  if (Object.keys(obj).length === 0) return result;
+  // obj의 키가 없으면 result 반환, for in은 키가 없으면 반복하지 않기에 안넣어도 무방
+  // if (Object.keys(obj).length === 0) return result;
 
   for (let key in obj) {
-    if (typeof obj[key] === "number" && obj[key] % 2 === 0) {
-      result += obj[key];
-    } else if (typeof obj[key] === "object") {
-      result += nestedEvenSum(obj[key]);
+    const val = obj[key];
+    if (typeof val === "number" && val % 2 === 0) {
+      result += val;
+    } else if (typeof val === "object") {
+      result += nestedEvenSum(val);
     }
   }
   return result;
