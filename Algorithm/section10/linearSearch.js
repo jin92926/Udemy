@@ -26,3 +26,7 @@ const linearSearch3 = (arr, num) => {
   });
   return -1;
 };
+
+const linearSearch4 = (arr, num) => {
+  return arr.indexOf(num);
+};
