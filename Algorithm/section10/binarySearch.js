@@ -21,3 +21,22 @@ const binarySearch = (arr, num) => {
   }
   return -1;
 };
+
+const binarySearch2 = (arr, num) => {
+  let [left, right] = [0, arr.length - 1];
+
+  while (left <= right) {
+    // median을 매번 다시 계산하는 것보다 while 루프 안에서만 선언
+    // 사실상 매번 다시 선언하는 것과 같지만 스코프가 명확해지고 성능차이가 없기에 이 방법이 더 적절할 듯
+    let median = Math.floor((left + right) / 2);
+    if (arr[median] === num) {
+      return median;
+    } else if (arr[median] < num) {
+      left = median + 1;
+    } else {
+      right = median - 1;
+    }
+  }
+
+  return -1;
+};
